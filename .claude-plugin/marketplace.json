@@ -1,14 +1,14 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "chatagent",
-  "description": "Connect any AI agent to the apps you already use, in plain English.",
+  "name": "murasaki",
+  "description": "Murasaki Chat Agent: connect any AI agent to the apps you already use, in plain English.",
   "owner": {
     "name": "Matteo Sanzone",
     "email": "matt@murasaki.ai"
   },
   "plugins": [
     {
-      "name": "chatagent",
+      "name": "murasaki-chat-agent",
       "description": "Connect any tool-using AI agent to the apps you already use (Slack, WhatsApp, Discord, Telegram, iMessage, Linear and more). Keyless where it can be, built on MCP. Read, act, and reply in real time, with you in control of every outbound message.",
       "author": {
         "name": "Matteo Sanzone"

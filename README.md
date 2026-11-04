@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/banner.svg" alt="ChatAgent — connect any AI agent to the apps you already use" width="100%">
+<img src="./assets/banner.svg" alt="Murasaki Chat Agent — connect any AI agent to the apps you already use" width="100%">
 
 <p>
   <a href="#license"><img src="https://img.shields.io/badge/license-MIT-7c3aed.svg" alt="MIT License"></a>
@@ -8,17 +8,17 @@
   <img src="https://img.shields.io/badge/built%20on-MCP-d946ef.svg" alt="Built on the Model Context Protocol">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux-6d28d9.svg" alt="macOS and Linux">
   <a href="#contributing"><img src="https://img.shields.io/badge/PRs-welcome-8b5cf6.svg" alt="PRs welcome"></a>
-  <a href="https://github.com/shibakouen/chatagent"><img src="https://img.shields.io/github/stars/shibakouen/chatagent?style=flat&color=c4b5fd" alt="GitHub stars"></a>
+  <a href="https://github.com/shibakouen/murasaki-chat-agent"><img src="https://img.shields.io/github/stars/shibakouen/murasaki-chat-agent?style=flat&color=c4b5fd" alt="GitHub stars"></a>
 </p>
 
 <strong>Give any tool-using AI agent a presence on the apps you already use.</strong><br>
-Say what you want in one sentence. ChatAgent connects your agent to the app, keeps it running, and lets it read, act, and reply in real time.
+Say what you want in one sentence. Murasaki Chat Agent connects your agent to the app, keeps it running, and lets it read, act, and reply in real time.
 
 </div>
 
 ---
 
-Your agent can already call tools. ChatAgent gives it ears and a mouth: it can hear a Slack DM, a WhatsApp message, a new Linear issue or any other app event, and answer in the same place, on its own. You stay in control of every message that leaves.
+Your agent can already call tools. Murasaki Chat Agent gives it ears and a mouth: it can hear a Slack DM, a WhatsApp message, a new Linear issue or any other app event, and answer in the same place, on its own. You stay in control of every message that leaves.
 
 It is built on the [Model Context Protocol](https://modelcontextprotocol.io), so the connectors are plain MCP servers. Any agent that can load an MCP server can use them. Claude Code is first class today through its channels feature; other runtimes connect through the same tools and a local event inbox (see [Works with](#works-with)).
 
@@ -32,7 +32,7 @@ It is built on the [Model Context Protocol](https://modelcontextprotocol.io), so
 "Connect my agent to our admin dashboard, read only."
 ```
 
-ChatAgent turns the sentence into a setup: it picks the most official way in with the least access, wires it up, and proves it works with a real message.
+Murasaki Chat Agent turns the sentence into a setup: it picks the most official way in with the least access, wires it up, and proves it works with a real message.
 
 ## Three levels of access
 
@@ -44,7 +44,7 @@ ChatAgent turns the sentence into a setup: it picks the most official way in wit
 
 ## Keyless where it can be
 
-Most people do not want to register an app or mint an API key. So when the app already holds a login on your machine, ChatAgent reuses it.
+Most people do not want to register an app or mint an API key. So when the app already holds a login on your machine, Murasaki Chat Agent reuses it.
 
 - **Slack** reuses the session in your browser or the Slack desktop app. No app to create, no token to paste. A real bot app over Socket Mode is there when you want a separate identity.
 - **WhatsApp** reuses a running bridge, or a device you pair once by QR.
@@ -66,8 +66,8 @@ A registered app or an API key is asked for only when there is no existing login
 ### With Claude Code
 
 ```
-/plugin marketplace add shibakouen/chatagent
-/plugin install chatagent@chatagent
+/plugin marketplace add shibakouen/murasaki-chat-agent
+/plugin install murasaki-chat-agent@murasaki
 ```
 
 Then ask for what you want:
@@ -126,7 +126,7 @@ flowchart LR
   W -->|realtime channel| C
   L -->|API watcher| I[Event inbox]:::b
   I --> C
-  C[ChatAgent core<br/>owner gate · drafts · approvals]:::c -->|push| AG([Your agent])
+  C[Murasaki Chat Agent core<br/>owner gate · drafts · approvals]:::c -->|push| AG([Your agent])
   AG -->|reply / notify| C
   C -->|send, with your approval| apps
   classDef a fill:#1c1230,stroke:#8b5cf6,color:#ede9fe;

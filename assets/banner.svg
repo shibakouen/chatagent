@@ -1,25 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="ChatAgent by Murasaki">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Murasaki Chat Agent">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0d0618"/>
-      <stop offset="1" stop-color="#1a0c33"/>
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#faf8ff"/>
     </linearGradient>
     <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#7c3aed"/>
       <stop offset="0.5" stop-color="#9333ea"/>
       <stop offset="1" stop-color="#d946ef"/>
     </linearGradient>
-    <radialGradient id="glowL" cx="18%" cy="-10%" r="70%">
-      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.28"/>
-      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="glowR" cx="92%" cy="115%" r="75%">
-      <stop offset="0" stop-color="#d946ef" stop-opacity="0.22"/>
+    <linearGradient id="brandV" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#d946ef" stop-opacity="0.16"/>
       <stop offset="1" stop-color="#d946ef" stop-opacity="0"/>
     </radialGradient>
-    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="7"/>
-    </filter>
     <style>
       .sans { font-family: "Helvetica Neue", Arial, "Segoe UI", system-ui, sans-serif; }
       .mono { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
@@ -28,68 +25,41 @@
   </defs>
 
   <rect width="1280" height="420" rx="24" fill="url(#bg)"/>
-  <rect width="1280" height="420" rx="24" fill="url(#glowL)"/>
-  <rect width="1280" height="420" rx="24" fill="url(#glowR)"/>
+  <rect x="1" y="1" width="1278" height="418" rx="23" fill="none" stroke="#ece6fb" stroke-width="2"/>
 
-  <!-- connection motif: apps on the left wiring into one agent core on the right -->
-  <g stroke="url(#brand)" stroke-width="2" fill="none" opacity="0.55">
-    <path d="M250 150 C 470 150, 560 210, 980 210"/>
-    <path d="M250 210 C 470 210, 560 210, 980 210"/>
-    <path d="M250 270 C 470 270, 560 210, 980 210"/>
-  </g>
-  <g fill="#120a24" stroke="url(#brand)" stroke-width="2">
-    <circle cx="250" cy="150" r="9"/>
-    <circle cx="250" cy="210" r="9"/>
-    <circle cx="250" cy="270" r="9"/>
-  </g>
-
-  <!-- agent core -->
-  <circle cx="980" cy="210" r="58" fill="url(#brand)" opacity="0.18" filter="url(#soft)"/>
-  <circle cx="980" cy="210" r="42" fill="#140a28" stroke="url(#brand)" stroke-width="2.5"/>
-  <text x="980" y="222" text-anchor="middle" class="mono" font-size="30" font-weight="700" fill="#f5f3ff">&#123;&#125;</text>
-  <text x="980" y="292" text-anchor="middle" class="sans" font-size="15" fill="#b9b0d6">your agent</text>
-
-  <!-- wordmark -->
-  <text x="80" y="118" class="sans" font-size="76" font-weight="800" fill="#f5f3ff" letter-spacing="-1.5">Chat<tspan fill="url(#brand)">Agent</tspan></text>
-  <text x="84" y="162" class="sans" font-size="23" font-weight="500" fill="#c4b5fd">Connect any AI agent to the apps you already use.</text>
-  <text x="84" y="196" class="sans" font-size="16" fill="#8f86b0">Read. Act. Stay connected and reply, in real time. One sentence to set up.</text>
+  <!-- brand lockup -->
+  <text x="80" y="70" class="serif" font-size="30" fill="url(#brandV)">&#33544;</text>
+  <text x="116" y="68" class="sans" font-size="17" font-weight="700" letter-spacing="3" fill="#7c3aed">MURASAKI</text>
+  <text x="80" y="140" class="sans" font-size="72" font-weight="800" fill="#231a3d" letter-spacing="-1.5">Chat <tspan fill="url(#brand)">Agent</tspan></text>
+  <text x="84" y="184" class="sans" font-size="23" font-weight="600" fill="#6d28d9">Connect any AI agent to the apps you already use.</text>
+  <text x="84" y="218" class="sans" font-size="16.5" fill="#6f6790">Read. Act. Stay connected and reply, in real time. One sentence to set up.</text>
 
   <!-- channel chips -->
   <g class="sans" font-size="15" font-weight="600">
-    <g transform="translate(84,320)">
-      <rect width="92" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="46" y="22" text-anchor="middle" fill="#ede9fe">Slack</text>
-    </g>
-    <g transform="translate(186,320)">
-      <rect width="118" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="59" y="22" text-anchor="middle" fill="#ede9fe">WhatsApp</text>
-    </g>
-    <g transform="translate(314,320)">
-      <rect width="98" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="49" y="22" text-anchor="middle" fill="#ede9fe">Discord</text>
-    </g>
-    <g transform="translate(422,320)">
-      <rect width="104" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="52" y="22" text-anchor="middle" fill="#ede9fe">Telegram</text>
-    </g>
-    <g transform="translate(536,320)">
-      <rect width="96" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="48" y="22" text-anchor="middle" fill="#ede9fe">iMessage</text>
-    </g>
-    <g transform="translate(642,320)">
-      <rect width="82" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="41" y="22" text-anchor="middle" fill="#ede9fe">Linear</text>
-    </g>
-    <g transform="translate(734,320)">
-      <rect width="150" height="34" rx="17" fill="#ffffff" fill-opacity="0.05" stroke="#a78bfa" stroke-opacity="0.35"/>
-      <text x="75" y="22" text-anchor="middle" fill="#c4b5fd">+ any app via MCP</text>
-    </g>
+    <g transform="translate(84,282)"><rect width="92" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="46" y="23" text-anchor="middle" fill="#4c1d95">Slack</text></g>
+    <g transform="translate(186,282)"><rect width="120" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="60" y="23" text-anchor="middle" fill="#4c1d95">WhatsApp</text></g>
+    <g transform="translate(316,282)"><rect width="100" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="50" y="23" text-anchor="middle" fill="#4c1d95">Discord</text></g>
+    <g transform="translate(426,282)"><rect width="106" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="53" y="23" text-anchor="middle" fill="#4c1d95">Telegram</text></g>
+    <g transform="translate(542,282)"><rect width="98" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="49" y="23" text-anchor="middle" fill="#4c1d95">iMessage</text></g>
+    <g transform="translate(84,330)"><rect width="84" height="36" rx="18" fill="#f5f1ff" stroke="#d9cdf7"/><text x="42" y="23" text-anchor="middle" fill="#4c1d95">Linear</text></g>
+    <g transform="translate(178,330)"><rect width="168" height="36" rx="18" fill="#faf5ff" stroke="#e7b6ee"/><text x="84" y="23" text-anchor="middle" fill="#a21caf">+ any app via MCP</text></g>
   </g>
 
-  <!-- murasaki mark -->
-  <g transform="translate(1155,44)">
-    <text x="40" y="26" text-anchor="end" class="sans" font-size="13" fill="#8f86b0">by</text>
-    <text x="78" y="30" text-anchor="end" class="serif" font-size="34" fill="url(#brand)">&#33544;</text>
-    <text x="78" y="50" text-anchor="end" class="sans" font-size="12" letter-spacing="1" fill="#b9b0d6">MURASAKI</text>
+  <!-- self-contained emblem (right column), clear of all text -->
+  <g>
+    <circle cx="1046" cy="214" r="140" fill="url(#halo)"/>
+    <g>
+      <line x1="902" y1="132" x2="1004" y2="200" stroke="url(#brandV)" stroke-width="2.2" opacity="0.7"/>
+      <line x1="892" y1="214" x2="1004" y2="214" stroke="url(#brandV)" stroke-width="2.2" opacity="0.7"/>
+      <line x1="902" y1="296" x2="1004" y2="228" stroke="url(#brandV)" stroke-width="2.2" opacity="0.7"/>
+    </g>
+    <g fill="#ffffff" stroke="url(#brandV)" stroke-width="2.4">
+      <circle cx="896" cy="132" r="11"/>
+      <circle cx="884" cy="214" r="11"/>
+      <circle cx="896" cy="296" r="11"/>
+    </g>
+    <circle cx="1046" cy="214" r="56" fill="#ffffff" stroke="url(#brandV)" stroke-width="3"/>
+    <text x="1046" y="228" text-anchor="middle" class="mono" font-size="40" font-weight="700" fill="#7c3aed">&#123;&#125;</text>
+    <text x="1046" y="304" text-anchor="middle" class="sans" font-size="15" font-weight="600" fill="#6f6790">your agent</text>
   </g>
 </svg>

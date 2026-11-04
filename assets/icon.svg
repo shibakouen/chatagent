@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f3eefc"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="0.5" stop-color="#9333ea"/>
+      <stop offset="1" stop-color="#d946ef"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="44%" r="52%">
+      <stop offset="0" stop-color="#d946ef" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#d946ef" stop-opacity="0"/>
+    </radialGradient>
+    <style>.mono{font-family:"SFMono-Regular",Menlo,Consolas,monospace;} .serif{font-family:"Hiragino Mincho ProN","Noto Serif JP",serif;}</style>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <rect x="8" y="8" width="1008" height="1008" rx="216" fill="none" stroke="#e6ddf8" stroke-width="10"/>
+  <circle cx="512" cy="452" r="300" fill="url(#halo)"/>
+  <circle cx="512" cy="452" r="226" fill="#ffffff" stroke="url(#brand)" stroke-width="20"/>
+  <text x="512" y="540" text-anchor="middle" class="mono" font-size="290" font-weight="700" fill="#231a3d">&#123;&#125;</text>
+  <text x="512" y="880" text-anchor="middle" class="serif" font-size="150" fill="url(#brand)">&#33544;</text>
+</svg>

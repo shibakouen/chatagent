@@ -1,5 +1,6 @@
 {
-  "name": "chatagent",
+  "name": "murasaki-chat-agent",
+  "displayName": "Murasaki Chat Agent",
   "version": "0.1.0",
   "description": "Connect any tool-using AI agent to the apps you already use (Slack, WhatsApp, Discord, Telegram, iMessage, Linear and more). Keyless where it can be, built on MCP. Read, act, and reply in real time, with you in control of every outbound message.",
   "author": {
@@ -32,7 +33,7 @@
     "self-hosted",
     "open-source"
   ],
-  "homepage": "https://github.com/shibakouen/chatagent",
-  "repository": "https://github.com/shibakouen/chatagent",
+  "homepage": "https://github.com/shibakouen/murasaki-chat-agent",
+  "repository": "https://github.com/shibakouen/murasaki-chat-agent",
   "icon": "./.claude-plugin/icon.png"
 }

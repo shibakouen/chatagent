@@ -24,10 +24,10 @@
 //   chatagent whatsapp-login <agent>           pair a Baileys WhatsApp device by QR code
 //   chatagent remove <agent>                   stop it and delete its folder
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, chmodSync, cpSync, rmSync, statSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, chmodSync, cpSync, rmSync, statSync, openSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { execFileSync, spawnSync } from 'node:child_process'
+import { execFileSync, spawnSync, spawn } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
 import { createInterface } from 'node:readline'
 import { chatagentHome, agentDir, readJson, writeJson, parseEnvFile, serverName } from '../channels/lib/agent.mjs'
@@ -39,13 +39,16 @@ const RUNTIME = join(HOME, 'runtime')
 const BUNDLED = ['slack', 'whatsapp', 'inbox']
 const OFFICIAL = ['discord', 'telegram', 'imessage']
 const SESSION = name => `ca-${name}`
+const WIN = process.platform === 'win32'
 
 const die = (msg, code = 1) => { process.stderr.write(`chatagent: ${msg}\n`); process.exit(code) }
 const say = msg => process.stdout.write(msg + '\n')
 
 function which(bin) {
-  const r = spawnSync('/bin/sh', ['-c', `command -v ${bin}`], { encoding: 'utf8' })
-  return r.status === 0 ? r.stdout.trim() : null
+  const r = WIN
+    ? spawnSync('where', [bin], { encoding: 'utf8' })
+    : spawnSync('/bin/sh', ['-c', `command -v ${bin}`], { encoding: 'utf8' })
+  return r.status === 0 ? r.stdout.trim().split(/\r?\n/)[0] : null
 }
 
 function tmuxBin() {
@@ -53,7 +56,12 @@ function tmuxBin() {
 }
 
 function claudeBin() {
-  return process.env.CHATAGENT_CLAUDE || [join(process.env.HOME, '.local/bin/claude'), '/opt/homebrew/bin/claude', '/usr/local/bin/claude'].find(existsSync) || which('claude')
+  if (process.env.CHATAGENT_CLAUDE) return process.env.CHATAGENT_CLAUDE
+  if (WIN) {
+    const home = process.env.USERPROFILE || process.env.HOME || ''
+    return [join(home, '.local', 'bin', 'claude.cmd'), join(home, 'AppData', 'Local', 'claude', 'claude.exe')].find(existsSync) || which('claude.cmd') || which('claude')
+  }
+  return [join(process.env.HOME, '.local/bin/claude'), '/opt/homebrew/bin/claude', '/usr/local/bin/claude'].find(existsSync) || which('claude')
 }
 
 function parseArgs(argv) {
@@ -114,11 +122,12 @@ function cmdSetup(opt) {
   chmodSync(join(RUNTIME, 'bin', 'chatagent.mjs'), 0o755)
   const checks = [
     ['node', process.versions.node],
-    ['tmux', tmuxBin() || 'MISSING (brew install tmux / apt install tmux)'],
     ['claude', claudeBin() || 'MISSING'],
-    ['python3', which('python3') || 'MISSING (needed for always-on)'],
-    ['bun', which('bun') || 'not installed (only needed for official Discord, Telegram and iMessage channels: brew install oven-sh/bun/bun)'],
+    ['python', (WIN ? which('python') : which('python3')) || 'MISSING (needed for always-on and watchers)'],
+    ['bun', which('bun') || 'not installed (only needed for the official Discord, Telegram and iMessage channels)'],
   ]
+  if (WIN) checks.push(['runner', 'Windows: agents run as a detached process. Live-agent prompts need WSL or a one-time interactive launch; connectors, watchers and always-on run natively.'])
+  else checks.splice(1, 0, ['tmux', tmuxBin() || 'MISSING (brew install tmux / apt install tmux)'])
   say(`\nRuntime ready at ${RUNTIME}`)
   for (const [k, v] of checks) say(`  ${k.padEnd(8)} ${v}`)
 }
@@ -309,7 +318,24 @@ function tmux(...args) {
   return spawnSync(bin, args, { encoding: 'utf8' })
 }
 
+// On Windows there is no tmux, so an agent runs as a detached background process
+// tracked by a pidfile under its state dir. macOS and Linux use tmux.
+function pidFile(name) {
+  return join(agentDir(name), 'state', 'agent.pid')
+}
+
+function pidAlive(pid) {
+  if (!pid) return false
+  try { process.kill(pid, 0); return true } catch (e) { return e.code === 'EPERM' }
+}
+
+function winRunning(name) {
+  const rec = readJson(pidFile(name), null)
+  return Boolean(rec && pidAlive(rec.pid))
+}
+
 function isRunning(name) {
+  if (WIN) return winRunning(name)
   return tmux('has-session', '-t', SESSION(name)).status === 0
 }
 
@@ -363,11 +389,49 @@ async function waitForReady(name, seconds = 90) {
   return { ok: false, answered, pane: capture(name), reason: 'timed out waiting for the prompt' }
 }
 
+// Windows: start the agent as a detached process, log to state/session.log, and
+// record its pid. The one-time trust and development-channel prompts cannot be
+// auto-answered without a terminal, so the owner pre-approves them (see below) or
+// runs the live agent under WSL, where the tmux path applies.
+async function winStart(name, dir, top, opt) {
+  const argv = launchCommand(name, top)
+  const env = { ...process.env }
+  const cfgDir = top.claude_config_dir || process.env.CLAUDE_CONFIG_DIR
+  if (cfgDir) env.CLAUDE_CONFIG_DIR = cfgDir
+  for (const k of top.official || []) env[`${k.toUpperCase()}_STATE_DIR`] = join(dir, 'state', k)
+  const logPath = join(dir, 'state', 'session.log')
+  const out = openSync(logPath, 'a')
+  const child = spawn(argv[0], argv.slice(1), { cwd: dir, detached: true, windowsHide: true, stdio: ['ignore', out, out], env })
+  writeJson(pidFile(name), { pid: child.pid, started: new Date().toISOString() })
+  child.unref()
+  const startedAt = Date.now()
+  const pendingKinds = new Set(channelsOf(top))
+  const deadline = Date.now() + (Number(opt.timeout) || 90) * 1000
+  while (pendingKinds.size && Date.now() < deadline) {
+    if (!pidAlive(child.pid)) {
+      say(`${name} exited at startup. Check ${logPath}. On Windows the first run may need the folder-trust and development-channel prompts answered once in an interactive terminal, or run the live agent under WSL.`)
+      return false
+    }
+    for (const k of pendingKinds) {
+      const hb = readJson(join(dir, 'state', k, 'heartbeat.json'), null)
+      if (hb && Date.parse(hb.ts) >= startedAt - 2000 && hb.connected) pendingKinds.delete(k)
+    }
+    if (pendingKinds.size) await new Promise(r => setTimeout(r, 1000))
+  }
+  if (pendingKinds.size) {
+    say(`${name} started (pid ${child.pid}) but these channels have not connected: ${[...pendingKinds].join(', ')}. See ${logPath}; a one-time prompt may be waiting. Logs: chatagent logs ${name}`)
+    return false
+  }
+  say(`${name} is running (pid ${child.pid}). Logs: ${logPath}`)
+  return true
+}
+
 async function cmdStart(name, opt = {}) {
   const { dir, top } = loadTop(name)
   requireRuntime()
-  if (isRunning(name)) { say(`${name} is already running (tmux session ${SESSION(name)})`); return true }
+  if (isRunning(name)) { say(`${name} is already running${WIN ? '' : ` (tmux session ${SESSION(name)})`}`); return true }
   writeAgentFiles(name, top) // keep paths current if the runtime moved
+  if (WIN) return winStart(name, dir, top, opt)
   // tmux sessions inherit the tmux server's environment, not ours, so pass on
   // which Claude profile to use explicitly.
   const env = { ...Object.fromEntries((top.official || []).map(k => [`${k.toUpperCase()}_STATE_DIR`, join(dir, 'state', k)])) }
@@ -406,6 +470,13 @@ async function cmdStart(name, opt = {}) {
 function cmdStop(name) {
   loadTop(name)
   if (!isRunning(name)) { say(`${name} is not running`); return }
+  if (WIN) {
+    const rec = readJson(pidFile(name), null)
+    try { process.kill(rec.pid) } catch {}
+    rmSync(pidFile(name), { force: true })
+    say(`Stopped ${name}`)
+    return
+  }
   tmux('kill-session', '-t', SESSION(name))
   say(`Stopped ${name}`)
 }
@@ -639,7 +710,7 @@ const main = async () => {
     case 'restart': cmdStop(pos[0]); { const ok = await cmdStart(pos[0], opt); process.exitCode = ok ? 0 : 2; return }
     case 'status': return cmdStatus(pos[0])
     case 'logs': return cmdLogs(pos[0], pos[1], opt)
-    case 'attach': loadTop(pos[0]); return say(`${tmuxBin()} attach -t ${SESSION(pos[0])}`)
+    case 'attach': loadTop(pos[0]); return say(WIN ? `Watch the log: type ${join(agentDir(pos[0]), 'state', 'session.log')}` : `${tmuxBin()} attach -t ${SESSION(pos[0])}`)
     case 'always-on': return cmdAlwaysOn(pos[0], opt)
     case 'watch': return cmdWatch(pos[0], pos[1], opt)
     case 'event': { const r = await inboxCall(pos[0], 'POST', '/event', { source: pos[1], text: pos.slice(2).join(' ') }); return say(JSON.stringify(r)) }

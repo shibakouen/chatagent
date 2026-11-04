@@ -46,10 +46,10 @@
     "self-hosted",
     "open-source"
   ],
-  "homepage": "https://github.com/shibakouen/chatagent",
+  "homepage": "https://github.com/shibakouen/murasaki-chat-agent",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shibakouen/chatagent.git"
+    "url": "https://github.com/shibakouen/murasaki-chat-agent.git"
   },
   "author": "Murasaki"
 }
