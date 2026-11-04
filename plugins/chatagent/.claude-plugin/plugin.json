@@ -1,8 +1,38 @@
 {
   "name": "chatagent",
   "version": "0.1.0",
-  "description": "Give your Claude Code agent access to any app from one sentence: read it, act in it, or stay connected and respond in real time. Slack and WhatsApp channels, an event inbox for every other app, API watchers, owner approval for outbound messages, and an always-on supervisor.",
-  "author": { "name": "Matteo Sanzone" },
+  "description": "Connect any tool-using AI agent to the apps you already use (Slack, WhatsApp, Discord, Telegram, iMessage, Linear and more). Keyless where it can be, built on MCP. Read, act, and reply in real time, with you in control of every outbound message.",
+  "author": {
+    "name": "Matteo Sanzone"
+  },
   "license": "MIT",
-  "keywords": ["channels", "slack", "whatsapp", "discord", "telegram", "linear", "agent", "always-on", "mcp", "integrations"]
+  "keywords": [
+    "ai-agent",
+    "agent",
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "claude-code",
+    "slack",
+    "slack-bot",
+    "whatsapp",
+    "discord",
+    "telegram",
+    "imessage",
+    "linear",
+    "chatbot",
+    "automation",
+    "assistant",
+    "tools",
+    "integrations",
+    "agentic",
+    "llm",
+    "openai",
+    "anthropic",
+    "self-hosted",
+    "open-source"
+  ],
+  "homepage": "https://github.com/shibakouen/chatagent",
+  "repository": "https://github.com/shibakouen/chatagent",
+  "icon": "./.claude-plugin/icon.png"
 }

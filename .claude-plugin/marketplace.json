@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "chatagent",
-  "description": "Connect Claude Code agents to any app, in plain English.",
+  "description": "Connect any AI agent to the apps you already use, in plain English.",
   "owner": {
     "name": "Matteo Sanzone",
     "email": "matt@murasaki.ai"
@@ -9,8 +9,10 @@
   "plugins": [
     {
       "name": "chatagent",
-      "description": "Give your Claude Code agent access to any app from one sentence: read it, act in it, or stay connected and respond in real time. Slack and WhatsApp channels, an event inbox and API watchers for everything else, owner approval for outbound messages, and an always-on supervisor.",
-      "author": { "name": "Matteo Sanzone" },
+      "description": "Connect any tool-using AI agent to the apps you already use (Slack, WhatsApp, Discord, Telegram, iMessage, Linear and more). Keyless where it can be, built on MCP. Read, act, and reply in real time, with you in control of every outbound message.",
+      "author": {
+        "name": "Matteo Sanzone"
+      },
       "category": "productivity",
       "source": "./plugins/chatagent"
     }
