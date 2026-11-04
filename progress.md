@@ -17,3 +17,12 @@
   - "Login expired" in tmux: default profile, not the account's. Fix: pass `CLAUDE_CONFIG_DIR`.
   - `node --test test/` fails on Node 22.16 (treats dir as file). Fix: glob `test/*.test.mjs`.
   - Draft-sent notice quoted pre-edit text. Fix: include the final text.
+
+## 2026-11-04 (later)
+
+- Added keyless Slack and renamed the project to ChatAgent (Matteo's steer: most people will not register an app or make an API key).
+- Keyless Slack (`channels/lib/slack-session.mjs` + `browser-session.mjs`): reads the slack.com `d` cookie from Chrome/Brave/Edge/Arc/Chromium or the Slack desktop app (OS-key decryption; cookie DB copied first; Chrome v24+ SHA256 host prefix handled), GETs app.slack.com/auth to list every workspace with its own xoxc session token, then calls the web API and opens the rtm.connect websocket as the person. It is now the default Slack backend; Socket Mode is `--set slack.backend=app`. Verified live: cookie read, auth.test ok, rtm socket connected, reads (users.conversations, emoji.list, history) ok, owner detected as the logged-in account, control chat = self-DM. No message was sent to anyone.
+- Discord keyless user-token path documented with its ToS warning (not built; bot token stays the default).
+- Rename: plugin/marketplace/skill/command/CLI/env vars (CHATAGENT_*), server prefix ca-, folders ~/.chatagent, all switchboard->chatagent. Repo dir still ~/switchboard because the dcg guard blocks mv of home dirs; Matteo renames it if he wants.
+- 20/20 tests (added slack-session parser tests); plugin + marketplace validate; dep `ws` 8.18.3 pinned.
+- Still not verified live: a full `chatagent start` Slack agent replying in Slack (needs a real send, which waits for Matteo); Baileys WhatsApp; official Discord/Telegram/iMessage; always-on as a real OS service.
