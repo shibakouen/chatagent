@@ -28,8 +28,8 @@
   <rect x="1" y="1" width="1278" height="418" rx="23" fill="none" stroke="#ece6fb" stroke-width="2"/>
 
   <!-- brand lockup -->
-  <text x="80" y="70" class="serif" font-size="30" fill="url(#brandV)">&#33544;</text>
-  <text x="116" y="68" class="sans" font-size="17" font-weight="700" letter-spacing="3" fill="#7c3aed">MURASAKI</text>
+  <text x="80" y="72" class="serif" font-size="34" font-weight="300" fill="url(#brand)">&#33544;</text>
+  <text x="118" y="70" class="sans" font-size="20" font-weight="600" letter-spacing="-0.3" fill="#231a3d">murasaki<tspan fill="#7c3aed">.ai</tspan></text>
   <text x="80" y="140" class="sans" font-size="72" font-weight="800" fill="#231a3d" letter-spacing="-1.5">Chat <tspan fill="url(#brand)">Agent</tspan></text>
   <text x="84" y="184" class="sans" font-size="23" font-weight="600" fill="#6d28d9">Connect any AI agent to the apps you already use.</text>
   <text x="84" y="218" class="sans" font-size="16.5" fill="#6f6790">Read. Act. Stay connected and reply, in real time. One sentence to set up.</text>
