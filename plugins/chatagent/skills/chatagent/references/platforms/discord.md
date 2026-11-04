@@ -1,0 +1,41 @@
+# Discord
+
+Default: Anthropic's official channel plugin with a bot token (no "API key" in the
+Slack sense, just one token from the developer portal). A keyless user-token path
+exists but breaks Discord's terms: see the bottom of this file.
+
+Use Anthropic's official channel plugin: `--official discord`. It runs on Bun.
+
+1. Bun: `brew install oven-sh/bun/bun` (or the platform package manager).
+2. The person creates the bot: discord.com/developers/applications → New Application →
+   Bot → enable **Message Content Intent** (without it messages arrive empty) → Reset
+   Token and copy it.
+3. OAuth2 → URL Generator → scope `bot`, permissions View Channels, Send Messages,
+   Send Messages in Threads, Read Message History, Attach Files, Add Reactions →
+   open the URL and add the bot to a server they share with it.
+4. In a normal Claude Code session: `/plugin install discord@claude-plugins-official`
+   (add the marketplace first if missing: `/plugin marketplace add anthropics/claude-plugins-official`).
+5. Token: chatagent runs the plugin with `DISCORD_STATE_DIR=<agent>/state/discord`, so
+   write `DISCORD_BOT_TOKEN=...` into `<agent>/state/discord/.env` (mode 600).
+6. `chatagent new <agent> --official discord ...` then `chatagent start <agent>`.
+7. DM the bot; it answers with a pairing code; approve it from inside the session
+   (`chatagent attach <agent>`, then `/discord:access pair <code>`), then
+   `/discord:access policy allowlist`.
+
+## Traps
+
+- User tokens and self-bots break Discord's terms. Always a bot account.
+- At 100+ servers the bot needs verification and the intent needs approval.
+- The official plugin has no draft approval: replies go out directly. If the agent
+  speaks for the owner to other people, keep it to the owner's DMs or add the
+  instruction "ask the owner with notify_owner before replying to anyone else".
+
+## Keyless (user token): possible, against the terms
+
+Discord can be driven with a user's own token over the gateway, the way the old
+read-only archivers did, with no bot and no developer portal. Do not default to it:
+Discord's terms forbid automating a user account ("self-bots"), and the account can
+be banned. Offer it only if the person asks for it knowing that, and prefer a bot.
+If built, it reads the token from the Discord desktop app's local storage and
+connects to the gateway exactly like the bot path; the shared core's owner and
+approval rules are unchanged.

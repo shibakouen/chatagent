@@ -5,8 +5,8 @@ Full sourced findings: vault `Research/Agent Connectors/Agent_Connectors_Researc
 ## Stack
 
 - Plain Node ESM channel servers (Node 22.5+ for `node:sqlite`), no build step, no Bun. Pinned deps: `@modelcontextprotocol/sdk` 1.32.2, `@slack/socket-mode` 3.1.1, `@slack/web-api` 8.3.0; Baileys `7.0.0-rc14` only with `setup --with whatsapp`.
-- Runtime copied to `~/.switchboard/runtime` so plugin updates never move the paths agents use (`${CLAUDE_PLUGIN_ROOT}` changes on update).
-- Supervisor: daemon-agent's `daemonctl` vendored in `plugins/switchboard/vendor/daemonctl` (launchd, systemd user, Task Scheduler).
+- Runtime copied to `~/.chatagent/runtime` so plugin updates never move the paths agents use (`${CLAUDE_PLUGIN_ROOT}` changes on update).
+- Supervisor: daemon-agent's `daemonctl` vendored in `plugins/chatagent/vendor/daemonctl` (launchd, systemd user, Task Scheduler).
 
 ## Claude Code channels (the core mechanism)
 
@@ -18,7 +18,7 @@ Full sourced findings: vault `Research/Agent Connectors/Agent_Connectors_Researc
 
 ## Known constraints
 
-- Startup prompts on a new agent folder: folder trust (defaults to "No, exit", needs Down then Enter) and the development-channel warning (Enter). `switchboard start` answers both.
+- Startup prompts on a new agent folder: folder trust (defaults to "No, exit", needs Down then Enter) and the development-channel warning (Enter). `chatagent start` answers both.
 - The chat prompt appears before channel servers finish connecting; `start` waits for fresh heartbeats.
 - tmux sessions inherit the tmux server's env; `CLAUDE_CONFIG_DIR` must be passed explicitly (an expired default profile showed "Login expired").
 - Slack: one socket connection per app token; history API 1 req/min and 15 messages for distributed non-Marketplace apps created after 2025-05-29.

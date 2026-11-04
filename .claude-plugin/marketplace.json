@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "switchboard",
+  "name": "chatagent",
   "description": "Connect Claude Code agents to any app, in plain English.",
   "owner": {
     "name": "Matteo Sanzone",
@@ -8,11 +8,11 @@
   },
   "plugins": [
     {
-      "name": "switchboard",
+      "name": "chatagent",
       "description": "Give your Claude Code agent access to any app from one sentence: read it, act in it, or stay connected and respond in real time. Slack and WhatsApp channels, an event inbox and API watchers for everything else, owner approval for outbound messages, and an always-on supervisor.",
       "author": { "name": "Matteo Sanzone" },
       "category": "productivity",
-      "source": "./plugins/switchboard"
+      "source": "./plugins/chatagent"
     }
   ]
 }
