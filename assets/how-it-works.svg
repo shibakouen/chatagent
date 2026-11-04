@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="How it works: your apps reach the Murasaki Chat Agent core over realtime channels and API watchers, the core pushes to your agent, your agent replies, and the core sends back to your apps with your approval">
+  <defs>
+    <marker id="aIn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6"/>
+    </marker>
+    <marker id="aOut" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#c084d8"/>
+    </marker>
+    <style>
+      .s { font-family: "Helvetica Neue", Arial, "Segoe UI", system-ui, sans-serif; }
+      .lbl { fill:#4c1d95; font-weight:700; }
+      .dim { fill:#6f6790; font-weight:600; }
+      .ink { fill:#231a3d; font-weight:700; }
+      .pale{ fill:#f5f3ff; font-weight:700; }
+      .in { stroke:#8b5cf6; stroke-width:2.2; fill:none; }
+      .out{ stroke:#d9a7e8; stroke-width:2.2; fill:none; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="340" rx="20" fill="#ffffff"/>
+  <rect x="1" y="1" width="1198" height="338" rx="19" fill="none" stroke="#ece6fb" stroke-width="2"/>
+
+  <!-- your apps -->
+  <rect x="40" y="96" width="220" height="148" rx="16" fill="#faf5ff" stroke="#e7b6ee" stroke-width="2"/>
+  <text x="150" y="124" text-anchor="middle" class="s ink" font-size="16">Your apps</text>
+  <g class="s lbl" font-size="14">
+    <rect x="66" y="138" width="168" height="30" rx="9" fill="#ffffff" stroke="#d9cdf7"/><text x="150" y="158" text-anchor="middle">Slack · WhatsApp</text>
+    <rect x="66" y="176" width="168" height="30" rx="9" fill="#ffffff" stroke="#d9cdf7"/><text x="150" y="196" text-anchor="middle">Discord · Telegram</text>
+    <rect x="66" y="210" width="168" height="26" rx="9" fill="#ffffff" stroke="#d9cdf7"/><text x="150" y="229" text-anchor="middle" font-size="13">Linear · GitHub · webhooks</text>
+  </g>
+
+  <!-- core -->
+  <rect x="500" y="118" width="210" height="104" rx="16" fill="#2a1a4d" stroke="#d946ef" stroke-width="2.4"/>
+  <text x="605" y="150" text-anchor="middle" class="s pale" font-size="17">Murasaki Chat Agent</text>
+  <text x="605" y="176" text-anchor="middle" class="s" font-size="13" fill="#c4b5fd">owner gate · drafts</text>
+  <text x="605" y="196" text-anchor="middle" class="s" font-size="13" fill="#c4b5fd">approvals</text>
+
+  <!-- your agent -->
+  <rect x="950" y="130" width="180" height="80" rx="40" fill="#efe7fe" stroke="#7c3aed" stroke-width="2.4"/>
+  <text x="1040" y="176" text-anchor="middle" class="s ink" font-size="17">Your agent</text>
+
+  <!-- inbound (top): apps -> core -> agent -->
+  <path d="M260 150 C 360 150, 400 150, 500 150" class="in" marker-end="url(#aIn)"/>
+  <text x="380" y="138" text-anchor="middle" class="s dim" font-size="13">channel / watcher</text>
+  <path d="M710 150 C 800 150, 860 150, 950 150" class="in" marker-end="url(#aIn)"/>
+  <text x="830" y="138" text-anchor="middle" class="s dim" font-size="13">push</text>
+
+  <!-- outbound (bottom): agent -> core -> apps -->
+  <path d="M950 190 C 860 190, 800 190, 710 190" class="out" marker-end="url(#aOut)"/>
+  <text x="830" y="210" text-anchor="middle" class="s dim" font-size="13">reply / notify</text>
+  <path d="M500 200 C 380 250, 300 274, 200 274 C 174 274, 156 260, 150 248" class="out" marker-end="url(#aOut)"/>
+  <text x="372" y="300" text-anchor="middle" class="s dim" font-size="13">send, with your approval</text>
+</svg>

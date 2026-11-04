@@ -115,24 +115,7 @@ Native realtime bridges for more runtimes are on the [roadmap](#roadmap). Contri
 
 ## How it works
 
-```mermaid
-flowchart LR
-  subgraph apps[Your apps]
-    S[Slack]:::a
-    W[WhatsApp]:::a
-    L[Linear / GitHub / webhooks]:::a
-  end
-  S -->|realtime channel| C
-  W -->|realtime channel| C
-  L -->|API watcher| I[Event inbox]:::b
-  I --> C
-  C[Murasaki Chat Agent core<br/>owner gate · drafts · approvals]:::c -->|push| AG([Your agent])
-  AG -->|reply / notify| C
-  C -->|send, with your approval| apps
-  classDef a fill:#1c1230,stroke:#8b5cf6,color:#ede9fe;
-  classDef b fill:#1c1230,stroke:#a78bfa,color:#ede9fe;
-  classDef c fill:#2a1a4d,stroke:#d946ef,color:#f5f3ff;
-```
+<p align="center"><img src="./assets/how-it-works.svg" alt="How it works: your apps reach the Murasaki Chat Agent core over realtime channels and API watchers; the core pushes to your agent; your agent replies; and the core sends back to your apps, with your approval" width="100%"></p>
 
 Each connector is an MCP server. The shared core handles who may talk to the agent, pairing, draft approval, tool-permission relay and health. An agent runs in its own folder with its own persona and permissions. Apps that are not chat apps feed an event inbox through small API watchers or webhooks. An optional supervisor keeps the whole thing alive across reboots.
 
