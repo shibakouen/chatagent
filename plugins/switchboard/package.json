@@ -1,0 +1,18 @@
+{
+  "name": "switchboard-channels",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Channel servers that connect a Claude Code session to Slack, WhatsApp and a local test inbox.",
+  "license": "MIT",
+  "engines": { "node": ">=22.5" },
+  "bin": { "switchboard": "./bin/switchboard.mjs" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@slack/socket-mode": "3.1.1",
+    "@slack/web-api": "8.3.0"
+  }
+}

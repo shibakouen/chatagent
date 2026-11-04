@@ -1,0 +1,8 @@
+{
+  "name": "switchboard",
+  "version": "0.1.0",
+  "description": "Give your Claude Code agent access to any app from one sentence: read it, act in it, or stay connected and respond in real time. Slack and WhatsApp channels, an event inbox for every other app, API watchers, owner approval for outbound messages, and an always-on supervisor.",
+  "author": { "name": "Matteo Sanzone" },
+  "license": "MIT",
+  "keywords": ["channels", "slack", "whatsapp", "discord", "telegram", "linear", "agent", "always-on", "mcp", "integrations"]
+}
